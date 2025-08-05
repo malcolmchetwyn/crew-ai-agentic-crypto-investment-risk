@@ -1,0 +1,34 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+env/
+myenv/
+
+# Logs
+*.log
+execution_trace.log
+
+# Local environment variables
+.env
+
+# VSCode or JetBrains IDE settings
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Jupyter and notebooks (if added later)
+.ipynb_checkpoints/
+
+# YAML configs (optional – if sensitive or generated)
+# Uncomment the next line *only* if you don’t want to commit config
+# src/config/*.yaml

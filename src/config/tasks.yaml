@@ -1,0 +1,85 @@
+screener_task:
+  description: >
+    For the cryptocurrency '{crypto_symbol}', you MUST perform the following:
+    1.  **Data Gathering & Verification**: Find the most recent, accurate data for all metrics required for the 'Quantitative Kill Switches'. For each metric, you MUST find and cite at least two reputable sources (e.g., Token Terminal, DefiLlama, CoinGecko, Artemis) and report the average or most conservative value.
+    2.  **Execute Kill Switches**: Rigorously check the verified data against EVERY one of the hard filters defined in the system's `quantitative_kill_switches` configuration. Be ruthless.
+
+  expected_output: >
+    A structured Markdown report.
+    - If the asset fails ANY kill switch, the report must state "STATUS: DISQUALIFIED" and then provide a detailed explanation of EXACTLY which filter it failed and the data found (e.g., "FAIL: Sustainable Security Economics - Fee-to-Emissions Ratio was 0.08, below the 0.1 threshold.").
+    - If the asset passes ALL kill switches, the report must state "STATUS: PASS - PROCEED TO QUANTITATIVE ANALYSIS" and then present a clean table of all the verified data points and the list of sources used for each.
+
+quant_task:
+  description: >
+    You have received a verified data report for {crypto_symbol} that has passed all kill switches.
+    Your task is to conduct a deep quantitative analysis and generate a score from 0-100 based on the A++ Crystalline Framework's scoring rubric.
+
+    You MUST process the entire `scoring_rubric` from the system configuration. For each `bucket`:
+    1.  State the bucket name and its overall weight.
+    2.  For each `sub_metric` within that bucket:
+        - State its name and its intra-bucket weight.
+        - Clearly explain how you are deriving the score from 0-10 based on the provided `scoring_logic` and the asset's data. Show your reasoning.
+        - State the final 0-10 score for the sub-metric.
+    3.  Calculate the weighted score for the entire bucket.
+
+    After scoring all buckets, calculate and present the final "Total Quantitative Score".
+
+  expected_output: >
+    A detailed quantitative scoring report in Markdown. The report must contain:
+    1.  A section for each scoring bucket from the rubric.
+    2.  Within each bucket, a breakdown of each sub-metric, its score (out of 10), and the justification.
+    3.  The final weighted score for each bucket.
+    4.  A concluding "Total Quantitative Score" out of 100, clearly showing the final weighted calculation.
+
+analyst_task:
+  description: >
+    You have received the data and a quantitative score for {crypto_symbol}. Your task is to provide the critical qualitative and risk analysis that the numbers cannot capture.
+    You MUST investigate and provide a detailed report on the following areas, citing a minimum of 5-10 high-quality sources (official docs, whitepapers, developer interviews, third-party audits, governance forum discussions):
+
+    1.  **Competitive Landscape & Moat Durability**: Beyond the numbers, what makes their moat defensible? Is their technology genuinely hard to replicate? Is their community's network effect sticky or mercenary?
+    2.  **Team, Governance & Treasury Alpha**: What is the team's reputation for execution? Scrutinize governance forums for signs of health or toxicity. How wisely is the treasury being deployed for ecosystem growth?
+    3.  **Security & Dependency Risk**: Are their audits from reputable firms? What are the key centralisation risks or dependencies on external oracles/bridges that could pose a tail risk?
+    4.  **MEV & Economic Leakage**: Is value being captured by the protocol or leaked to third parties?
+
+  expected_output: >
+    A comprehensive qualitative and risk analysis report in Markdown. The report must contain:
+    - A detailed section for each of the four areas of investigation (Competitive Landscape, Team/Governance, Security/Dependency, MEV).
+    - Bullet points with clear, evidence-backed claims.
+    - A concluding "Key Qualitative Risks & Mitigants" summary.
+    - A "Sources" section with a numbered list of all references used.
+
+synthesizer_task:
+  description: >
+    You have received all prior analyses for {crypto_symbol}: the screener's verified data, the quant's detailed scoring card, and the analyst's qualitative risk report.
+    Your task is to synthesize all inputs into a final, institutional-grade investment memo. You must act as the final decision-maker, weighing the objective score against the qualitative risks.
+
+  expected_output: >
+    A final, polished, and comprehensive investment memo in Markdown. The memo MUST include:
+    1.  **Executive Summary**: A one-paragraph overview stating the final score, recommendation, and the core investment thesis.
+    2.  **Final Score & Recommendation**: State the "Total Quantitative Score". Compare this to the `buy_threshold` and `consider_threshold` from the system configuration to provide a clear 'High Conviction Buy', 'Consider', or 'Avoid' recommendation.
+    3.  **Core Investment Thesis (SWOT Analysis)**: A bulleted list of the most critical factors:
+        - **Strengths**: Key quantitative and qualitative advantages.
+        - **Weaknesses**: Internal flaws, risks, or economic leaks.
+        - **Opportunities**: Catalysts, market narratives, potential for growth.
+        - **Threats**: Competitive pressures, regulatory risks, technological challenges.
+    4.  **Final Verdict**: A concluding paragraph explaining why, on balance, the asset does or does not represent a compelling risk-adjusted investment opportunity.
+
+fact_checker_task:
+  description: >
+    You have received a data report from the Screener Agent. Your task is to independently verify every single data point in that report.
+    For each metric, find at least two new, reputable sources and compare the values.
+    If the original data is within a 5% margin of error, approve it.
+    If there is a larger discrepancy, you MUST provide a new, corrected average value and cite all three sources (the original and your two new ones).
+  expected_output: >
+    A final, verified data report. It must state "STATUS: DATA VERIFIED" and present a clean table of the final, confirmed data points and the sources used for verification.
+
+qualitative_verification_task:
+  description: >
+    You have been given a qualitative and risk analysis report. Review each major claim in the report regarding the project's competitive moat, team, governance, and security.
+    For at least three of the most significant claims, you MUST find one independent source that corroborates it and one that contradicts or offers a counter-point.
+    Do not conduct a full new report, only verify or challenge the existing one.
+  expected_output: >
+    A concise verification summary in Markdown.
+    - List the claims that have been successfully verified with corroborating evidence.
+    - List any claims that are weak, unsubstantiated, or have strong counter-arguments, providing citations for the contradictory evidence.
+    - Conclude with a "Verification Status: Passed" or "Verification Status: Passed with Concerns".

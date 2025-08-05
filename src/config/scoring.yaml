@@ -1,0 +1,74 @@
+# ------------------------------------------------------------------
+# Buy/Consider thresholds
+buy_threshold: 78
+consider_threshold: 60
+
+# ------------------------------------------------------------------
+# Scoring weights (must sum to 1)
+quantitative_weights:
+  native_demand_mechanics: 0.25
+  valuation_realism:       0.18
+  dev_traction:            0.18
+  unlock_inflation:        0.10
+  catalyst_clock:          0.10
+  reg_moat:                0.10
+  liquidity_custody:       0.05
+
+# ------------------------------------------------------------------
+# Hard-filter definitions for the Screener stage
+hard_filters:
+
+  token_sink_elasticity:
+    description: "Utility capture: on-chain spend ≥ 2% OR fee/MCAP ≥ 1%"
+    options:
+      - metric:   "onchain_sink_pct"
+        operator:   ">="
+        value:      0.02
+      - metric:   "fee_mcap_pct"
+        operator:   ">="
+        value:      0.01
+
+  valuation_sanity:
+    description: "FDV ≤ 15× credible 18‑mo revenue OR FDV/TVL ≤ 0.7"
+    options:
+      - metric:   "FDV/Revenue"
+        operator: "<="
+        value:    15
+      - metric:   "FDV/TVL"
+        operator: "<="
+        value:    0.7
+
+  dev_velocity:
+    description: "90‑day commit ≥ 25th pct AND ≥ 4 prod releases in 6 mo"
+    conditions:
+      - metric:   "commit_percentile_90d"
+        operator: ">="
+        value:    25
+      - metric:   "prod_releases_6mo"
+        operator: ">="
+        value:    4
+
+  unlock_emissions:
+    description: "Unlocks next 12 mo < 15% of circ. supply AND long-run inflation ≤ 8%/yr"
+    conditions:
+      - metric:   "unlock_12mo_pct"
+        operator: "<"
+        value:    0.15
+      - metric:   "inflation_pct_per_yr"
+        operator: "<="
+        value:    8
+
+  liquidity_custody:
+    description: "Trades on ≥ 3 top‑10 spot exchanges AND supports major hardware wallets"
+    conditions:
+      - metric:   "exchange_count_top10"
+        operator: ">="
+        value:    3
+      - metric:   "hw_wallet_support"
+        operator: ">="
+        value:    1
+
+  regulatory_class:
+    description: "Security‑risk score ≤ 2/5"
+    operator:   "<="
+    value:      2
